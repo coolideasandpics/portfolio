@@ -3,37 +3,49 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import "./ArtPage.css";
 
+import art01 from "../assets/ArtPage/img-01.png";
+import art02 from "../assets/ArtPage/img-02.png";
+import art03 from "../assets/ArtPage/img-03.png";
+import art04 from "../assets/ArtPage/img-04.png";
+import art05 from "../assets/ArtPage/img-05.png";
+import art06 from "../assets/ArtPage/img-06.png";
+import art07 from "../assets/ArtPage/img-07.png";
+import art08 from "../assets/ArtPage/img-08.png";
+import art09 from "../assets/ArtPage/img-09.png";
+import art10 from "../assets/ArtPage/img-10.png";
+import art11 from "../assets/ArtPage/img-11.png";
+
 gsap.registerPlugin(useGSAP);
 
 const photos = [
-  "src/assets/ArtPage/img-01.png",
-  "src/assets/ArtPage/img-02.png",
-  "src/assets/ArtPage/img-03.png",
-  "src/assets/ArtPage/img-04.png",
-  "src/assets/ArtPage/img-05.png",
-  "src/assets/ArtPage/img-06.png",
-  "src/assets/ArtPage/img-07.png",
-  "src/assets/ArtPage/img-08.png",
-  "src/assets/ArtPage/img-09.png",
-  "src/assets/ArtPage/img-10.png",
-  "src/assets/ArtPage/img-11.png",
+  art01,
+  art02,
+  art03,
+  art04,
+  art05,
+  art06,
+  art07,
+  art08,
+  art09,
+  art10,
+  art11,
 ];
 
 const introPhotos = [
-  "src/assets/ArtPage/img-01.png",
-  "src/assets/ArtPage/img-02.png",
-  "src/assets/ArtPage/img-03.png",
-  "src/assets/ArtPage/img-04.png",
-  "src/assets/ArtPage/img-05.png",
-  "src/assets/ArtPage/img-06.png",
-  "src/assets/ArtPage/img-07.png",
-  "src/assets/ArtPage/img-08.png",
-  "src/assets/ArtPage/img-09.png",
-  "src/assets/ArtPage/img-10.png",
-  "src/assets/ArtPage/img-11.png",
-  "src/assets/ArtPage/img-01.png",
-  "src/assets/ArtPage/img-02.png",
-  "src/assets/ArtPage/img-03.png",
+  art01,
+  art02,
+  art03,
+  art04,
+  art05,
+  art06,
+  art07,
+  art08,
+  art09,
+  art10,
+  art11,
+  art01,
+  art02,
+  art03,
 ];
 
 const horizontalSize = {
