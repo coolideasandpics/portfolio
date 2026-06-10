@@ -6,7 +6,7 @@ import { ScrollTrigger, SplitText } from "gsap/all";
 import gsap from "gsap";
 
 import Loader from "./Components/Loader.jsx";
-import Navbar from "./Components/NavBar.jsx";
+import Navbar from "./Components/Navbar.jsx";
 
 import Home from "./Pages/Home.jsx";
 import AboutPage from "./Pages/AboutPage.jsx";
