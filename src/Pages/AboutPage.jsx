@@ -7,6 +7,12 @@ import { useGSAP } from "@gsap/react";
 import PageFooter from "../Components/page-footer/PageFooter.jsx";
 import "../Components/page-footer/PageFooter.css";
 
+import macIcon from "../assets/AboutPage/mac.png";
+import xm5Icon from "../assets/AboutPage/xm5.png";
+import camIcon from "../assets/AboutPage/cam.png";
+import hatIcon from "../assets/AboutPage/hat.png";
+import bootsIcon from "../assets/AboutPage/boots.png";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutPage = () => {
@@ -719,23 +725,23 @@ const AboutPage = () => {
 
           <div className="animated-icons">
             <div className="animated-icon icon-1">
-              <img src="src/assets/AboutPage/mac.png" alt="" />
+              <img src={macIcon} alt="" />
             </div>
 
             <div className="animated-icon icon-2">
-              <img src="src/assets/AboutPage/xm5.png" alt="" />
+              <img src={xm5Icon} alt="" />
             </div>
 
             <div className="animated-icon icon-3">
-              <img src="src/assets/AboutPage/cam.png" alt="" />
+              <img src={camIcon} alt="" />
             </div>
 
             <div className="animated-icon icon-4">
-              <img src="src/assets/AboutPage/hat.png" alt="" />
+              <img src={hatIcon} alt="" />
             </div>
 
             <div className="animated-icon icon-5">
-              <img src="src/assets/AboutPage/boots.png" alt="" />
+              <img src={bootsIcon} alt="" />
             </div>
           </div>
 
