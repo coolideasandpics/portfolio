@@ -1,0 +1,47 @@
+/* =========================
+   Loader
+========================= */
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  color: #fa4609;
+  will-change: opacity;
+  z-index: 999;
+}
+
+.loader .counter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader svg {
+  width: 85%;
+  height: 85%;
+}
+
+.loader svg path {
+  fill: none;
+}
+
+.counter p {
+  font-weight: 400;
+  font-size: 1.75rem;
+}
+
+.loader svg .orbit-text {
+  fill: #fa4609;
+  text-transform: uppercase;
+  font-size: 3.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}

@@ -1,0 +1,235 @@
+/* =========================
+   About Hero
+========================= */
+
+.about {
+  position: relative;
+  width: 100%;
+  min-height: 68svh;
+  padding: clamp(1.25rem, 4vw, 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #0f0f0f;
+}
+
+.about-hero-reveal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(78vw, 1050px);
+  height: clamp(8rem, 28vw, 22rem);
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin: left center;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  border-radius: 999px;
+}
+
+.about-hero-title {
+  position: relative;
+  z-index: 2;
+  width: min(74vw, 980px);
+  margin: 0 auto;
+  font-size: clamp(2.25rem, 3.3vw, 4.15rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
+  text-align: center;
+  color: #fff;
+}
+
+.about-hero-part {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.about-highlight {
+  color: #c51d1d;
+  font-weight: 600;
+}
+
+/* =========================
+     Services / What I Do
+  ========================= */
+
+.services {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #0f0f0f;
+}
+
+.services-header {
+  position: relative;
+  width: 100%;
+  padding: 0 2rem;
+  object-fit: contain;
+  font-size: clamp(5rem, 15vw, 15rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-align: center;
+  background-color: #0f0f0f;
+  color: #c51d1d;
+  will-change: transform;
+  line-height: 0.8;
+  z-index: 1;
+}
+
+.services-header:nth-child(2) {
+  z-index: 2;
+}
+
+.services-copy {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-top: 155svh;
+  padding: 2rem 2rem 25svh 2rem;
+  text-align: center;
+  background-color: #0f0f0f;
+}
+
+.services-copy h1 {
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  text-align: center;
+}
+
+/* =========================
+     Scroll Reveal Text
+  ========================= */
+
+.animate-text {
+  position: relative;
+  width: min(60%, 1150px);
+  margin: 0 auto;
+  color: #4f4f4f;
+  --clip-value: 100%;
+}
+
+.animate-text::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  color: #fff;
+  clip-path: inset(0 0 var(--clip-value) 0);
+  will-change: clip-path;
+}
+
+/* =========================
+     Responsive
+  ========================= */
+
+@media (max-width: 1000px) {
+  .about-hero-title {
+    width: min(84vw, 820px);
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.18;
+  }
+
+  .about-hero-reveal {
+    width: 86vw;
+    height: clamp(8rem, 34vw, 18rem);
+  }
+
+  .services-header {
+    font-size: clamp(5rem, 14vw, 9rem);
+  }
+
+  .services-copy h1 {
+    font-size: clamp(2rem, 6vw, 3.25rem);
+  }
+
+  .animate-text {
+    width: min(84%, 850px);
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 1.5rem;
+  }
+
+  .about-hero-title {
+    width: 92vw;
+    font-size: clamp(1.85rem, 6vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .about-hero-reveal {
+    width: 92vw;
+    height: clamp(8rem, 42vw, 16rem);
+  }
+
+  .services-header {
+    font-size: clamp(4.25rem, 15vw, 6.5rem);
+    padding: 0 1rem;
+    line-height: 0.85;
+  }
+
+  .services-copy {
+    margin-top: 120svh;
+    padding: 4rem 1.25rem 18svh 1.25rem;
+  }
+
+  .services-copy h1 {
+    font-size: clamp(2rem, 7.5vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .animate-text {
+    width: 92%;
+  }
+
+  .animate-text::before {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 1rem;
+  }
+
+  .about-hero-title {
+    width: 94vw;
+    font-size: clamp(1.45rem, 7vw, 2.2rem);
+    line-height: 1.14;
+  }
+
+  .about-hero-reveal {
+    width: 94vw;
+    height: clamp(7rem, 50vw, 13rem);
+  }
+
+  .services-header {
+    font-size: clamp(3.35rem, 16vw, 4.5rem);
+    padding: 0 0.5rem;
+    line-height: 0.9;
+  }
+
+  .services-copy {
+    margin-top: 105svh;
+    padding: 3rem 1rem 14svh 1rem;
+  }
+
+  .services-copy h1 {
+    font-size: clamp(1.55rem, 7.8vw, 2.25rem);
+    line-height: 1.08;
+  }
+
+  .animate-text {
+    width: 96%;
+  }
+}

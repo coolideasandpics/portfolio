@@ -1,0 +1,134 @@
+.projects-page {
+  background: #efefef;
+  color: #111;
+}
+
+.projects-opener {
+  min-height: 100vh;
+  padding: 8rem 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.projects-opener-inner {
+  width: min(1450px, 100%);
+  margin: 0 auto;
+}
+
+.projects-opener-top {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 45px;
+  align-items: start;
+}
+
+.projects-count-left,
+.projects-count-right {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+.projects-count-right {
+  color: #c51d1d;
+}
+
+.projects-title {
+  font-size: clamp(5rem, 15vw, 14.65rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.projects-faded-word {
+  margin-left: 90px;
+  margin-top: -1.4rem;
+}
+
+.projects-faded-word span {
+  display: block;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: rgba(17, 17, 17, 0.1);
+  font-weight: 600;
+}
+
+.projects-opener-bottom {
+  margin-top: 3rem;
+  margin-left: 95px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 900px);
+  gap: 2rem 4rem;
+  align-items: start;
+}
+
+.projects-opener-label {
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.projects-opener-copy {
+  font-size: clamp(1.5rem, 2.4vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  margin: 0;
+  max-width: 50ch;
+}
+
+@media (max-width: 900px) {
+  .projects-opener {
+    min-height: auto;
+    padding: 7rem 1.25rem 3rem;
+  }
+
+  .projects-opener-top {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+  }
+
+  .projects-count-left {
+    display: none;
+  }
+
+  .projects-count-right {
+    justify-self: end;
+    padding-top: 0.35rem;
+    font-size: 1.25rem;
+  }
+
+  .projects-title {
+    grid-column: 1 / -1;
+    font-size: clamp(3.5rem, 18vw, 6rem);
+  }
+
+  .projects-faded-word {
+    margin-left: 0;
+    margin-top: -0.5rem;
+  }
+
+  .projects-faded-word span {
+    font-size: clamp(2.8rem, 14vw, 5rem);
+  }
+
+  .projects-opener-bottom {
+    margin-left: 0;
+    margin-top: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .projects-opener-label {
+    font-size: 1rem;
+  }
+
+  .projects-opener-copy {
+    max-width: 100%;
+    font-size: clamp(1.3rem, 6vw, 2rem);
+    line-height: 1.18;
+  }
+}

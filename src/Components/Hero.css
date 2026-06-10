@@ -1,0 +1,125 @@
+/* =========================
+   Hero
+========================= */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+  background: #0f0f0f;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.55) 0,
+    rgba(255, 255, 255, 0.55) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 18vh;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 15, 15, 0) 0%,
+    rgba(15, 15, 15, 0.55) 65%,
+    #0f0f0f 100%
+  );
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.liquid-gradient-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0f0f0f;
+}
+
+.liquid-gradient-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  align-items: center;
+  z-index: 4;
+  text-align: center;
+}
+
+.hero-tagline {
+  visibility: hidden;
+  color: #fff;
+  font-size: clamp(4rem, 12vw, 13.5rem);
+  line-height: 0.9;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+.tag-word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.word-shaping,
+.word-into {
+  margin-right: 0.18em;
+}
+
+@media (max-width: 1000px) {
+  .hero-tagline {
+    font-size: 7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-tagline {
+    font-size: 5rem;
+    line-height: 0.9;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tagline {
+    font-size: 3.6rem;
+    line-height: 0.92;
+  }
+}

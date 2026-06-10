@@ -1,0 +1,123 @@
+/* =========================
+   Navbar
+========================= */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  padding: 0.8rem clamp(1.5rem, 4vw, 4rem);
+  mix-blend-mode: difference;
+}
+
+nav > div {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 1.5vw, 1.6rem);
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+}
+
+nav a {
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+nav p {
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+}
+
+nav a,
+nav p {
+  color: white;
+  mix-blend-mode: difference;
+}
+
+nav a.nav-link {
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+nav p:hover {
+  color: #1dc5c5;
+}
+nav a.nav-link:hover {
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+nav a.nav-link-home:hover {
+  color: #1dc5c5;
+}
+
+nav a.nav-link-about:hover {
+  color: #1dc5c5;
+}
+
+nav a.nav-link-projects:hover {
+  color: #1dc5c5;
+}
+
+nav a.nav-link-art:hover {
+  color: #1dc5c5;
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 0.75rem 1rem;
+  }
+
+  nav > div {
+    align-items: flex-start;
+  }
+
+  nav ul {
+    gap: 1rem;
+    font-size: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  nav p {
+    font-size: 2rem;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    padding: 0.75rem;
+  }
+
+  nav > div {
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    max-width: 60%;
+  }
+
+  nav p {
+    font-size: 1.75rem;
+  }
+}

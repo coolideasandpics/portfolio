@@ -1,0 +1,1194 @@
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap");
+
+.about-root {
+  background: #efefef;
+  color: #000000;
+  font-family: "Clash Display", Arial, Helvetica, sans-serif;
+}
+
+.about-root :where(*) {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.about-root :where(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-root :where(.about-page) {
+  min-height: 100vh;
+  padding: 8rem 2rem;
+}
+
+.about-root :where(.about-hero) {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-root :where(.eyebrow) {
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-root :where(h1) {
+  font-size: 7vw;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.about-root :where(p) {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.about-root :where(section) {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #141414;
+  color: #efefef;
+}
+
+/* ABOUT HERO */
+
+.about-page-hero {
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.hero-header {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 1100px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  will-change: transform, opacity;
+  z-index: 3;
+}
+
+.about-title {
+  max-width: 1300px;
+  font-size: clamp(5rem, 10vw, 13rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  color: #c51d1d;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.title-question {
+  color: rgba(227, 227, 219, 0.9);
+}
+
+.title-name {
+  color: #c51d1d;
+}
+
+.about-title-subcopy {
+  max-width: 680px;
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(227, 227, 219, 0.72);
+}
+
+/* ANIMATED ICONS - KEEPING THIS STRUCTURE FOR GSAP */
+
+.animated-icons {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  will-change: transform;
+  z-index: 2;
+}
+
+.animated-icon {
+  flex: 1;
+  aspect-ratio: 1;
+  max-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  opacity: 0;
+  transform: translateY(36px);
+}
+
+.animated-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.animated-text {
+  position: relative;
+  max-width: 1000px;
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: black;
+}
+
+.text-segment {
+  opacity: 0;
+}
+
+.placeholder-icon {
+  margin-top: -10px;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  vertical-align: middle;
+  will-change: transform;
+  visibility: hidden;
+}
+
+/* ABOUT CONTENT SECTIONS */
+
+.about-belief-section,
+.about-workflow-section {
+  width: 100vw;
+  min-height: 100svh;
+  height: auto;
+  padding: clamp(5rem, 8vw, 8rem) clamp(1.25rem, 4vw, 5rem);
+  overflow: hidden;
+}
+
+/* WHAT I BRING TO THE SCREEN */
+
+.about-belief-section {
+  background: #efefef;
+  color: #111;
+  display: block;
+  min-height: 100svh;
+  padding: 0 clamp(1.25rem, 4vw, 5rem);
+  overflow: hidden;
+}
+
+.about-section-title-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.about-section-index {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: clamp(1.2rem, 1.7vw, 2rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #c51d1d;
+}
+
+.about-section-title {
+  max-width: 15ch;
+  font-size: clamp(5rem, 8.5vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: right;
+  color: #111;
+}
+
+/* OVERLAPPING CARDS */
+
+.about-belief-grid {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding-left: 0;
+  padding-top: 1rem;
+  margin-top: clamp(1rem, 3vw, 3.5rem);
+}
+
+.about-belief-card {
+  position: relative;
+  left: 0;
+  width: min(29vw, 440px);
+  min-height: clamp(360px, 33vw, 480px);
+  padding: clamp(1.2rem, 1.7vw, 1.6rem);
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 14px;
+  background: #f8f6f1;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: -1rem 0 3rem rgba(0, 0, 0, 0.12);
+  transition: transform 0.4s ease, left 0.4s ease, background-color 0.4s ease,
+    color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.about-belief-card:not(:first-child) {
+  margin-left: -64px;
+}
+
+.about-belief-card:hover {
+  transform: translateY(-20px);
+  background: #111;
+  color: #c51d1d;
+  border-color: #111;
+  box-shadow: -1rem 0 3rem rgba(0, 0, 0, 0.24);
+  z-index: 5;
+}
+
+.about-belief-card:hover ~ .about-belief-card {
+  left: 70px;
+}
+
+.about-belief-card > span {
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(17, 17, 17, 0.42);
+  transition: color 0.4s ease;
+}
+
+.about-belief-card:hover > span {
+  color: rgba(197, 29, 29, 0.72);
+}
+
+.about-belief-card-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.85rem, 1.1vw, 1.1rem);
+  padding-top: clamp(2.2rem, 3.5vw, 4rem);
+  flex: 1;
+}
+
+.about-belief-card h2 {
+  max-width: 8.5ch;
+  font-size: clamp(2.7rem, 4.6vw, 5.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+  transition: color 0.4s ease;
+}
+
+.about-belief-card p {
+  max-width: 31rem;
+  font-size: clamp(1.18rem, 1.37vw, 1.47rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: rgba(17, 17, 17, 0.68);
+  margin: 0;
+  transition: color 0.4s ease;
+}
+
+.about-belief-card:hover p {
+  color: rgba(227, 227, 219, 0.82);
+}
+
+.card-cue {
+  display: inline-block;
+  margin-top: auto;
+  font-size: clamp(2rem, 3vw, 4rem);
+  line-height: 0.8;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(17, 17, 17, 0.45);
+  transform-origin: center;
+  transition: transform 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+}
+
+.about-belief-card:hover .card-cue {
+  transform: translate(6px, -6px);
+  color: #c51d1d;
+}
+
+/* WORKFLOW SECTION: ROLES + DETAILS */
+
+.about-workflow-section {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  min-height: 100svh;
+  padding: 0;
+  background: #efefef;
+  color: #111;
+  overflow: hidden;
+  display: block;
+}
+
+.roles-layer,
+.notice-layer {
+  position: absolute;
+  inset: clamp(2rem, 4vw, 4rem) 0 0 0;
+  width: 100%;
+  height: calc(100% - clamp(2rem, 4vw, 4rem));
+  overflow: hidden;
+}
+
+.roles-layer {
+  z-index: 2;
+  background: #efefef;
+  color: #111;
+}
+
+.notice-layer {
+  z-index: 3;
+  background: #efefef;
+  color: #111;
+}
+
+/* ROLES HORIZONTAL LAYER */
+
+.roles-heading {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 4rem);
+  left: clamp(1.25rem, 4vw, 5rem);
+  right: clamp(1.25rem, 4vw, 5rem);
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.roles-index {
+  font-size: clamp(1.2rem, 1.7vw, 2rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #c51d1d;
+}
+
+.roles-title {
+  max-width: 9ch;
+  font-size: clamp(5rem, 8.5vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: right;
+  color: #111;
+}
+
+.roles-horizontal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: clamp(13rem, 16vw, 17rem);
+}
+
+.roles-track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding-left: clamp(1.25rem, 4vw, 5rem);
+  padding-right: clamp(24vw, 32vw, 40vw);
+  will-change: transform;
+}
+
+.role-panel {
+  flex: 0 0 min(60vw, 810px);
+  height: min(56svh, 580px);
+  padding: clamp(1.5rem, 2.5vw, 3rem);
+  border-radius: 18px;
+  background: #111;
+  color: #e3e3db;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+}
+
+.role-panel-top {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.role-panel-copy {
+  width: 100%;
+  max-width: 760px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.role-panel h3 {
+  max-width: 11ch;
+  min-height: clamp(8rem, 10vw, 13.5rem);
+  font-size: clamp(3.4rem, 5.4vw, 7.4rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #c51d1d;
+  margin: 0;
+}
+
+.role-panel-copy p {
+  max-width: 34rem;
+  min-height: clamp(4.5rem, 5.5vw, 7rem);
+  margin: 0;
+  font-size: clamp(1.25rem, 1.6vw, 2rem);
+  line-height: 1.13;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: rgba(227, 227, 219, 0.82);
+}
+
+.role-panel-copy ul {
+  width: 100%;
+  max-width: 36rem;
+  margin: 0;
+  margin-top: clamp(1.1rem, 1.4vw, 1.6rem);
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 3vw, 3rem);
+  row-gap: 0.55rem;
+}
+
+.role-panel-copy li {
+  font-size: clamp(1.1rem, 1.22vw, 1.32rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: rgba(227, 227, 219, 0.72);
+}
+
+.role-panel-copy li::before {
+  content: "— ";
+  color: #c51d1d;
+}
+
+.role-panel-experience h3 {
+  max-width: 12ch;
+}
+
+.role-panel-experience .role-panel-copy ul {
+  grid-template-columns: 1fr;
+  max-width: 38rem;
+}
+
+/* NOTICE / DETAILS LAYER */
+
+.notice-index {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 4rem);
+  left: clamp(1.25rem, 4vw, 5rem);
+  z-index: 5;
+  font-size: clamp(1.2rem, 1.7vw, 2rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #c51d1d;
+}
+
+.notice-main-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  max-width: 10ch;
+  text-align: center;
+  font-size: clamp(4rem, 8vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.detail-pieces {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.detail-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(190px, 15vw, 280px);
+  min-height: clamp(150px, 13vw, 220px);
+  opacity: 0;
+  will-change: transform, opacity;
+  pointer-events: auto;
+}
+
+.detail-piece-inner {
+  width: 100%;
+  min-height: inherit;
+  padding: clamp(1rem, 1.4vw, 1.4rem);
+  background: #f8f6f1;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 16px;
+  box-shadow: -0.75rem 0.75rem 2.5rem rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.35s ease, background-color 0.35s ease,
+    color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.detail-piece h3 {
+  width: 100%;
+  font-size: clamp(1.7rem, 2.2vw, 3rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.detail-piece p {
+  max-width: 14rem;
+  font-size: clamp(0.95rem, 1vw, 1.08rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  text-align: center;
+  color: rgba(17, 17, 17, 0.62);
+  transition: color 0.35s ease;
+}
+
+.detail-piece:hover .detail-piece-inner {
+  transform: translateY(-8px);
+  background: #111;
+  color: #c51d1d;
+  box-shadow: -1rem 1rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+.detail-piece:hover p {
+  color: rgba(227, 227, 219, 0.82);
+}
+
+.piece-hierarchy {
+  width: clamp(240px, 18vw, 340px);
+}
+
+.piece-responsive {
+  width: clamp(300px, 24vw, 440px);
+}
+
+/* RESPONSIVE */
+
+/* Tablets / small laptops */
+@media (max-width: 1000px) {
+  .about-root :where(section) {
+    min-height: 100svh;
+    padding: 1rem;
+  }
+
+  .hero-header {
+    top: 36%;
+    width: 92vw;
+  }
+
+  .about-title {
+    max-width: 92vw;
+    font-size: clamp(4rem, 15vw, 8rem);
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    white-space: normal;
+  }
+
+  .about-title-subcopy {
+    max-width: 520px;
+    font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+    line-height: 1.25;
+  }
+
+  .animated-icons {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .animated-icon {
+    max-height: 220px;
+  }
+
+  .animated-text {
+    max-width: 92vw;
+    font-size: clamp(2rem, 8.2vw, 4.5rem);
+    line-height: 1.02;
+  }
+
+  .placeholder-icon {
+    width: 30px;
+    height: 30px;
+    margin-top: -5px;
+  }
+
+  .about-belief-section,
+  .about-workflow-section {
+    padding: 4.5rem 1rem;
+  }
+
+  .about-section-title-wrap {
+    flex-direction: column;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .about-section-title {
+    max-width: 10ch;
+    text-align: left;
+    font-size: clamp(4rem, 13vw, 8rem);
+    line-height: 0.84;
+  }
+
+  .about-belief-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-left: 0;
+    padding-top: 0;
+    margin-top: clamp(2rem, 5vw, 4rem);
+    gap: 1rem;
+  }
+
+  .about-belief-card {
+    width: 100%;
+    min-height: clamp(320px, 55svh, 460px);
+    padding: clamp(1.1rem, 4vw, 1.6rem);
+  }
+
+  .about-belief-card:not(:first-child) {
+    margin-left: 0;
+  }
+
+  .about-belief-card:hover {
+    transform: none;
+  }
+
+  .about-belief-card:hover ~ .about-belief-card {
+    left: 0;
+  }
+
+  .about-belief-card h2 {
+    max-width: 9ch;
+    font-size: clamp(3.2rem, 14vw, 6rem);
+  }
+
+  .about-belief-card p {
+    max-width: 100%;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    line-height: 1.25;
+  }
+
+  .card-cue {
+    font-size: clamp(2rem, 9vw, 3.5rem);
+  }
+
+  .roles-heading {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .roles-title {
+    max-width: 8ch;
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    line-height: 0.84;
+  }
+
+  .roles-horizontal {
+    padding-top: clamp(10rem, 22vw, 14rem);
+  }
+
+  .roles-track {
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 35vw;
+  }
+
+  .role-panel {
+    flex: 0 0 82vw;
+    height: min(62svh, 620px);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-radius: 16px;
+  }
+
+  .role-panel h3 {
+    max-width: 9ch;
+    font-size: clamp(3rem, 11vw, 6rem);
+    line-height: 0.86;
+  }
+
+  .role-panel-copy p {
+    max-width: 100%;
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+    font-size: clamp(1.05rem, 3.2vw, 1.5rem);
+    line-height: 1.12;
+  }
+
+  .role-panel-copy ul {
+    max-width: 100%;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 0.45rem;
+  }
+
+  .role-panel-copy li {
+    font-size: clamp(0.9rem, 2.7vw, 1.05rem);
+    line-height: 1.12;
+  }
+
+  .notice-main-title {
+    font-size: clamp(3.4rem, 13vw, 7rem);
+    line-height: 0.84;
+  }
+
+  .detail-piece {
+    width: clamp(150px, 34vw, 230px);
+    min-height: clamp(120px, 28vw, 180px);
+  }
+
+  .detail-piece-inner {
+    padding: clamp(0.8rem, 2.8vw, 1.1rem);
+    border-radius: 14px;
+  }
+
+  .detail-piece h3 {
+    font-size: clamp(1.2rem, 4.3vw, 2rem);
+  }
+
+  .detail-piece p {
+    max-width: 11rem;
+    font-size: clamp(0.78rem, 2.4vw, 0.95rem);
+    line-height: 1.15;
+  }
+
+  .piece-hierarchy {
+    width: clamp(170px, 40vw, 260px);
+  }
+
+  .piece-responsive {
+    width: clamp(220px, 52vw, 330px);
+  }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  .about-root {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .about-root :where(section) {
+    width: 100vw;
+    min-height: 100svh;
+    padding: 1rem;
+  }
+
+  .hero-header {
+    top: 35%;
+    width: 92vw;
+    gap: 0.9rem;
+  }
+
+  .about-title {
+    font-size: clamp(3.3rem, 18vw, 5.7rem);
+    line-height: 0.86;
+    white-space: normal;
+  }
+
+  .title-question,
+  .title-name {
+    display: block;
+  }
+
+  .about-title-subcopy {
+    max-width: 18rem;
+    font-size: 0.95rem;
+    line-height: 1.22;
+  }
+
+  .animated-icons {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 1rem;
+    gap: 0.25rem;
+  }
+
+  .animated-icon {
+    max-height: 120px;
+  }
+
+  .animated-text {
+    max-width: 94vw;
+    font-size: clamp(1.75rem, 8.5vw, 3.2rem);
+    line-height: 1.04;
+  }
+
+  .placeholder-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: -4px;
+  }
+
+  .about-belief-section {
+    min-height: auto;
+    padding: 4.5rem 1rem 5rem;
+  }
+
+  .about-section-index {
+    font-size: 1.2rem;
+  }
+
+  .about-section-title {
+    max-width: 9ch;
+    font-size: clamp(3.3rem, 15.5vw, 5.8rem);
+    line-height: 0.86;
+  }
+
+  .about-belief-grid {
+    margin-top: 2.5rem;
+    gap: 0.9rem;
+  }
+
+  .about-belief-card {
+    min-height: 360px;
+    border-radius: 14px;
+    padding: 1rem;
+  }
+
+  .about-belief-card h2 {
+    max-width: 8.5ch;
+    font-size: clamp(2.8rem, 15vw, 4.8rem);
+    line-height: 0.9;
+  }
+
+  .about-belief-card p {
+    font-size: 0.98rem;
+    line-height: 1.25;
+  }
+
+  .about-belief-card:hover {
+    background: #f8f6f1;
+    color: #111;
+    border-color: rgba(17, 17, 17, 0.12);
+    box-shadow: -1rem 0 3rem rgba(0, 0, 0, 0.12);
+  }
+
+  .about-belief-card:hover p {
+    color: rgba(17, 17, 17, 0.68);
+  }
+
+  .about-belief-card:hover span {
+    color: rgba(17, 17, 17, 0.42);
+  }
+
+  .about-belief-card:hover .card-cue {
+    transform: none;
+    color: rgba(17, 17, 17, 0.45);
+  }
+
+  .about-workflow-section {
+    height: 100svh;
+    min-height: 100svh;
+    padding: 0;
+  }
+
+  .roles-heading {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    align-items: flex-start;
+  }
+
+  .roles-index,
+  .notice-index {
+    font-size: 1.2rem;
+  }
+
+  .roles-title {
+    max-width: 7.5ch;
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 0.85;
+  }
+
+  .roles-horizontal {
+    padding-top: clamp(8.5rem, 34vw, 12rem);
+  }
+
+  .roles-track {
+    gap: 0.85rem;
+    padding-left: 1rem;
+    padding-right: 45vw;
+  }
+
+  .role-panel {
+    flex: 0 0 86vw;
+    height: min(58svh, 520px);
+    padding: 1rem;
+    border-radius: 14px;
+  }
+
+  .role-panel h3 {
+    max-width: 9ch;
+    font-size: clamp(2.05rem, 10.5vw, 3.65rem);
+    line-height: 0.88;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .role-panel-copy {
+    overflow: hidden;
+  }
+
+  .role-panel-copy p {
+    margin-top: 1rem;
+    font-size: clamp(1rem, 4.2vw, 1.25rem);
+    line-height: 1.13;
+  }
+
+  .role-panel-copy ul {
+    margin-top: 1.5rem;
+    grid-template-columns: 1fr;
+    row-gap: 0.35rem;
+  }
+
+  .role-panel-copy li {
+    font-size: 0.92rem;
+    line-height: 1.12;
+  }
+
+  .role-panel-experience .role-panel-copy ul {
+    grid-template-columns: 1fr;
+  }
+
+  .notice-layer {
+    overflow: hidden;
+  }
+
+  .notice-index {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .notice-main-title {
+    max-width: 8ch;
+    font-size: clamp(3.1rem, 15vw, 5.4rem);
+    line-height: 0.84;
+  }
+
+  .detail-piece {
+    width: clamp(126px, 34vw, 170px);
+    min-height: clamp(104px, 28vw, 145px);
+  }
+
+  .detail-piece-inner {
+    padding: 0.75rem;
+    border-radius: 12px;
+    box-shadow: -0.45rem 0.45rem 1.6rem rgba(0, 0, 0, 0.12);
+  }
+
+  .detail-piece h3 {
+    font-size: clamp(1rem, 4.2vw, 1.35rem);
+    line-height: 0.95;
+  }
+
+  .detail-piece p {
+    max-width: 8.5rem;
+    font-size: clamp(0.68rem, 2.6vw, 0.82rem);
+    line-height: 1.12;
+  }
+
+  .piece-hierarchy {
+    width: clamp(145px, 40vw, 200px);
+  }
+
+  .piece-responsive {
+    width: clamp(185px, 54vw, 255px);
+  }
+
+  .detail-piece:hover .detail-piece-inner {
+    transform: none;
+    background: #f8f6f1;
+    color: #111;
+    box-shadow: -0.45rem 0.45rem 1.6rem rgba(0, 0, 0, 0.12);
+  }
+
+  .detail-piece:hover p {
+    color: rgba(17, 17, 17, 0.62);
+  }
+}
+
+/* Smaller iPhones / narrow Android screens */
+@media (max-width: 430px) {
+  .about-title {
+    font-size: clamp(3rem, 17vw, 5rem);
+  }
+
+  .about-title-subcopy {
+    font-size: 0.9rem;
+  }
+
+  .animated-icon {
+    max-height: 96px;
+  }
+
+  .about-section-title {
+    font-size: clamp(3rem, 14.5vw, 5rem);
+  }
+
+  .about-belief-card {
+    min-height: 340px;
+  }
+
+  .about-belief-card h2 {
+    font-size: clamp(2.55rem, 14vw, 4.4rem);
+  }
+
+  .about-belief-card p {
+    font-size: 0.92rem;
+  }
+
+  .roles-title {
+    font-size: clamp(2.7rem, 13.5vw, 4.4rem);
+  }
+
+  .roles-horizontal {
+    padding-top: clamp(8rem, 36vw, 11rem);
+  }
+
+  .role-panel {
+    flex-basis: 88vw;
+    height: min(56svh, 500px);
+  }
+
+  .role-panel h3 {
+    max-width: 10ch;
+    font-size: clamp(2rem, 9.85vw, 3.55rem);
+    line-height: 0.9;
+  }
+
+  .role-panel-copy p {
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+  }
+
+  .role-panel-copy li {
+    font-size: 0.86rem;
+  }
+
+  .notice-main-title {
+    font-size: clamp(2.75rem, 14vw, 4.7rem);
+  }
+
+  .detail-piece {
+    width: clamp(112px, 32vw, 150px);
+    min-height: clamp(94px, 27vw, 130px);
+  }
+
+  .detail-piece h3 {
+    font-size: clamp(0.88rem, 3.9vw, 1.2rem);
+  }
+
+  .detail-piece p {
+    font-size: clamp(0.62rem, 2.45vw, 0.76rem);
+  }
+
+  .piece-hierarchy {
+    width: clamp(130px, 39vw, 180px);
+  }
+
+  .piece-responsive {
+    width: clamp(170px, 52vw, 230px);
+  }
+}
+
+/* Very short phones / landscape-ish browser heights */
+@media (max-height: 720px) and (max-width: 640px) {
+  .hero-header {
+    top: 34%;
+  }
+
+  .about-title {
+    font-size: clamp(2.8rem, 15vw, 4.8rem);
+  }
+
+  .animated-icon {
+    max-height: 86px;
+  }
+
+  .about-belief-card {
+    min-height: 310px;
+  }
+
+  .role-panel {
+    height: 54svh;
+  }
+
+  .role-panel h3 {
+    font-size: clamp(2.1rem, 11vw, 3.5rem);
+  }
+
+  .role-panel-copy p {
+    margin-top: 0.75rem;
+  }
+
+  .role-panel-copy ul {
+    margin-top: 1rem;
+  }
+
+  .notice-main-title {
+    font-size: clamp(2.45rem, 12vw, 4rem);
+  }
+
+  .detail-piece {
+    transform-origin: center;
+  }
+}
+
+/* Touch devices: reduce hover weirdness */
+@media (hover: none) and (pointer: coarse) {
+  .about-belief-card:hover,
+  .detail-piece:hover .detail-piece-inner {
+    transform: none;
+  }
+}

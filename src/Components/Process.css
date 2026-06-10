@@ -1,0 +1,147 @@
+/* =========================
+   Process
+========================= */
+.process {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #efefef;
+}
+
+.process-intro h1,
+.process-title-container h1 {
+  font-size: 10rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.25rem;
+}
+.process-intro h1 {
+  font-weight: 600;
+  font-size: clamp(5rem, 14vw, 16rem);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+.process section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.process-intro {
+  height: 70svh;
+  text-align: center;
+  align-content: center;
+  background-color: #efefef;
+}
+
+.process-title {
+  height: 65svh;
+  display: flex;
+  align-items: center;
+}
+
+.process-title-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  will-change: transform;
+}
+
+.process-title .chars {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
+}
+
+.process-title-copy {
+  max-width: 580px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+.process-eyebrow {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.process-title-copy p:last-child {
+  font-size: clamp(1rem, 1.25vw, 2.25rem);
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+}
+
+.process-number-break {
+  height: 55svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: #efefef;
+}
+
+.process-number-break.number-right {
+  justify-content: flex-end;
+  padding-right: 8vw;
+}
+
+.process-number-break.number-left {
+  justify-content: flex-start;
+  padding-left: 8vw;
+}
+
+.process-big-number {
+  font-size: clamp(12rem, 30vw, 34rem);
+  font-weight: 500;
+  line-height: 0.75;
+  letter-spacing: -0.06em;
+  display: inline-block;
+  pointer-events: auto;
+  cursor: default;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.process-big-number.number-01 {
+  color: #c51d1d;
+  transform: rotate(-7deg) translateY(8%);
+}
+
+.process-big-number.number-01:hover {
+  transform: rotate(7deg) translateY(8%) scale(1.14);
+}
+
+.process-big-number.number-02 {
+  color: #c51d1d;
+  transform: rotate(6deg) translateY(6%);
+}
+
+.process-big-number.number-02:hover {
+  transform: rotate(-6deg) translateY(6%) scale(1.14);
+}
+
+.process-big-number.number-03 {
+  color: #c51d1d;
+  transform: rotate(-5deg) translateY(7%);
+}
+
+.process-big-number.number-03:hover {
+  transform: rotate(5deg) translateY(7%) scale(1.14);
+}
+
+.process-big-number.number-04 {
+  color: #c51d1d;
+  transform: rotate(7deg) translateY(6%);
+}
+
+.process-big-number.number-04:hover {
+  transform: rotate(-7deg) translateY(6%) scale(1.14);
+}
