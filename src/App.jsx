@@ -14,7 +14,7 @@ import ProjectsPage from "./Pages/ProjectsPage.jsx";
 import ArtPage from "./Pages/ArtPage.jsx";
 import ProjectDetailPage from "./Pages/ProjectDetailPage.jsx";
 
-import RouteDebug from "./Components/RouteDebug";
+//import RouteDebug from "./Components/RouteDebug";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -66,7 +66,6 @@ const App = () => {
   return (
     <main>
       {!isLoaded && <Loader onComplete={() => setIsLoaded(true)} />}
-      <RouteDebug />
       <Navbar isLoaded={isLoaded} />
 
       <Routes>

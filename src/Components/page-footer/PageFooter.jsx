@@ -4,6 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
+import resumePdf from "../../assets/PageFooter/Sanchit_Duggal_CV.pdf";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const PageFooter = () => {
@@ -150,7 +152,7 @@ const PageFooter = () => {
       <div className="page-footer-inner">
         <a
           className="page-footer-resume-button"
-          href="/resume.pdf"
+          href={resumePdf}
           target="_blank"
           rel="noreferrer"
         >
@@ -211,7 +213,7 @@ const PageFooter = () => {
               LinkedIn
             </a>
 
-            <a href="/resume.pdf" target="_blank" rel="noreferrer">
+            <a href={resumePdf} target="_blank" rel="noreferrer">
               Resume
             </a>
 
