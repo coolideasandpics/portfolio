@@ -15,6 +15,7 @@ import ArtPage from "./Pages/ArtPage.jsx";
 import ProjectDetailPage from "./Pages/ProjectDetailPage.jsx";
 
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 //import RouteDebug from "./Components/RouteDebug";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -78,6 +79,7 @@ const App = () => {
       </Routes>
 
       <Analytics />
+      <SpeedInsights />
     </main>
   );
 };
