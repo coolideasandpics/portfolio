@@ -14,6 +14,7 @@ import ProjectsPage from "./Pages/ProjectsPage.jsx";
 import ArtPage from "./Pages/ArtPage.jsx";
 import ProjectDetailPage from "./Pages/ProjectDetailPage.jsx";
 
+import { Analytics } from "@vercel/analytics/react";
 //import RouteDebug from "./Components/RouteDebug";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -75,6 +76,8 @@ const App = () => {
         <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
         <Route path="/art" element={<ArtPage />} />
       </Routes>
+
+      <Analytics />
     </main>
   );
 };
