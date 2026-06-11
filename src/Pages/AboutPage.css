@@ -615,7 +615,6 @@
 
 /* RESPONSIVE */
 
-/* Tablets / small laptops */
 @media (max-width: 1000px) {
   .about-root :where(section) {
     min-height: 100svh;
