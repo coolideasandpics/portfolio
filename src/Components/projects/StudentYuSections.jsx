@@ -120,7 +120,8 @@ const StudentYuSections = ({ project }) => {
             scrollTrigger: {
               trigger: chapter,
               start: "top 78%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -142,7 +143,8 @@ const StudentYuSections = ({ project }) => {
             scrollTrigger: {
               trigger: block,
               start: "top 82%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -165,7 +167,8 @@ const StudentYuSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".studentyu-process-grid",
             start: "top 78%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -188,7 +191,8 @@ const StudentYuSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".studentyu-phone-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -206,7 +210,8 @@ const StudentYuSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".studentyu-phone-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -226,7 +231,8 @@ const StudentYuSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".studentyu-decisions-list",
             start: "top 82%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );

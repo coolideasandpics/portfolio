@@ -111,7 +111,8 @@ const MokatailSections = ({ project }) => {
             scrollTrigger: {
               trigger: chapter,
               start: "top 78%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -133,7 +134,8 @@ const MokatailSections = ({ project }) => {
             scrollTrigger: {
               trigger: block,
               start: "top 82%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -155,7 +157,8 @@ const MokatailSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".mokatail-motion-preview",
             start: "top 78%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -175,7 +178,8 @@ const MokatailSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".mokatail-decisions-list",
             start: "top 82%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -198,7 +202,8 @@ const MokatailSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".mokatail-screen-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -216,7 +221,8 @@ const MokatailSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".mokatail-screen-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -236,7 +242,8 @@ const MokatailSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".mokatail-build-list",
             start: "top 82%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );

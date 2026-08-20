@@ -79,7 +79,8 @@ const OocaaSections = ({ project }) => {
               trigger: chapter,
               start: "top 82%",
               end: "bottom 18%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -106,7 +107,8 @@ const OocaaSections = ({ project }) => {
               trigger: section,
               start: "top 82%",
               end: "bottom 18%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -133,7 +135,8 @@ const OocaaSections = ({ project }) => {
               trigger: visual,
               start: "top 82%",
               end: "bottom 18%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -154,7 +157,8 @@ const OocaaSections = ({ project }) => {
               trigger: visual,
               start: "top 78%",
               end: "bottom 18%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -176,7 +180,8 @@ const OocaaSections = ({ project }) => {
             trigger: ".project-screens-section",
             start: "top 82%",
             end: "bottom 18%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -199,7 +204,8 @@ const OocaaSections = ({ project }) => {
             trigger: ".project-screen-grid",
             start: "top 82%",
             end: "bottom 18%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -220,7 +226,8 @@ const OocaaSections = ({ project }) => {
             trigger: ".approach-list",
             start: "top 82%",
             end: "bottom 18%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -241,7 +248,8 @@ const OocaaSections = ({ project }) => {
             trigger: ".flow-steps",
             start: "top 78%",
             end: "bottom 20%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -262,7 +270,8 @@ const OocaaSections = ({ project }) => {
             trigger: ".oocaa-decision-list",
             start: "top 82%",
             end: "bottom 18%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );

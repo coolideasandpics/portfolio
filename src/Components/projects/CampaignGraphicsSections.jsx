@@ -112,7 +112,8 @@ const CampaignGraphicsSections = ({ project }) => {
             scrollTrigger: {
               trigger: chapter,
               start: "top 78%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -134,7 +135,8 @@ const CampaignGraphicsSections = ({ project }) => {
             scrollTrigger: {
               trigger: block,
               start: "top 82%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
+              once: true,
             },
           }
         );
@@ -157,7 +159,8 @@ const CampaignGraphicsSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".campaign-housing-grid",
             start: "top 78%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -180,7 +183,8 @@ const CampaignGraphicsSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".campaign-poster-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -198,7 +202,8 @@ const CampaignGraphicsSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".campaign-poster-grid",
             start: "top 76%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -218,7 +223,8 @@ const CampaignGraphicsSections = ({ project }) => {
           scrollTrigger: {
             trigger: ".campaign-decisions-list",
             start: "top 82%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
