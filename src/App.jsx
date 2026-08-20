@@ -5,7 +5,7 @@ import Lenis from "lenis";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import gsap from "gsap";
 
-import Loader from "./Components/Loader.jsx";
+//import Loader from "./Components/Loader.jsx";
 import Navbar from "./Components/Navbar.jsx";
 
 import Home from "./Pages/Home.jsx";
@@ -15,13 +15,13 @@ import ArtPage from "./Pages/ArtPage.jsx";
 import ProjectDetailPage from "./Pages/ProjectDetailPage.jsx";
 
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 //import RouteDebug from "./Components/RouteDebug";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  //const [isLoaded, setIsLoaded] = useState(false);
   const lenisRef = useRef(null);
   const location = useLocation();
 
@@ -67,11 +67,10 @@ const App = () => {
 
   return (
     <main>
-      {!isLoaded && <Loader onComplete={() => setIsLoaded(true)} />}
-      <Navbar isLoaded={isLoaded} />
+      <Navbar isLoaded={true} />
 
       <Routes>
-        <Route path="/" element={<Home isLoaded={isLoaded} />} />
+        <Route path="/" element={<Home isLoaded={true} />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
@@ -83,5 +82,7 @@ const App = () => {
     </main>
   );
 };
+
+// {!isLoaded && <Loader onComplete={() => setIsLoaded(true)} />}
 
 export default App;
