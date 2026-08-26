@@ -218,7 +218,7 @@ const PageFooter = () => {
             </a>
 
             <a
-              href="https://www.instagram.com/sanartchit"
+              href="https://www.instagram.com/ssanchromaticc"
               target="_blank"
               rel="noreferrer"
             >
