@@ -154,7 +154,7 @@ const LiquidGradientBackground = () => {
       stencil: false,
       depth: false,
     });
-
+    renderer.setClearColor("#C51D1D", 1);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.domElement.className = "liquid-gradient-canvas";
     container.appendChild(renderer.domElement);
