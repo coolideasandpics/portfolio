@@ -160,7 +160,7 @@ const LiquidGradientBackground = () => {
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#0f0f0f");
+    scene.background = new THREE.Color("#C51D1D");
 
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 10000);
     camera.position.z = 50;
@@ -204,7 +204,7 @@ const LiquidGradientBackground = () => {
       uTouchTexture: { value: touchTexture.texture },
       uGrainIntensity: { value: 0.13 },
       uZoom: { value: 1.0 },
-      uDarkNavy: { value: hexToVector3("#0f0f0f") },
+      uDarkNavy: { value: hexToVector3("#8C1D18") },
       uGradientSize: { value: 0.45 },
       uGradientCount: { value: 12.0 },
       uColor1Weight: { value: 0.65 },
