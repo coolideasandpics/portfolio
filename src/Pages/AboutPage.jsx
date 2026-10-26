@@ -43,10 +43,45 @@ const AboutPage = () => {
         ];
       }
 
-      const isMobile = window.innerWidth <= 1000;
-      const headerIconSize = isMobile ? 30 : 60;
-      const currentIconSize = iconElements[0].getBoundingClientRect().width;
-      const exactScale = headerIconSize / currentIconSize;
+      let headerIconSize;
+      let exactScale;
+      let duplicateIcons = null;
+      let heroScroll;
+      let viewportWidth = window.innerWidth;
+      let viewportHeight = window.innerHeight;
+      let resizeState = null;
+      let activeScrollState = null;
+
+      const trackScrollProgress = (trigger) => {
+        if (
+          ScrollTrigger.isRefreshing ||
+          viewportWidth !== window.innerWidth ||
+          viewportHeight !== window.innerHeight
+        ) return;
+        const scroll = trigger.scroll();
+        // anticipatePin may mark the workflow active before its actual range.
+        if (trigger.isActive && scroll >= trigger.start && scroll <= trigger.end) {
+          activeScrollState = { trigger, progress: trigger.progress };
+        } else if (activeScrollState?.trigger === trigger) {
+          activeScrollState = null;
+        }
+      };
+
+      const measureIconGeometry = () => {
+        const isMobile = window.innerWidth <= 1000;
+        headerIconSize = isMobile ? 30 : 60;
+        const currentIconSize =
+          parseFloat(getComputedStyle(iconElements[0]).width) ||
+          iconElements[0].offsetWidth;
+        exactScale = headerIconSize / currentIconSize;
+
+        duplicateIcons?.forEach((duplicate) => {
+          duplicate.style.width = `${headerIconSize}px`;
+          duplicate.style.height = `${headerIconSize}px`;
+        });
+      };
+
+      measureIconGeometry();
 
       gsap.set([".title-question", ".title-name", ".about-title-subcopy"], {
         opacity: 0,
@@ -194,6 +229,8 @@ const AboutPage = () => {
         });
 
         gsap.set(noticeTitle, {
+          xPercent: -50,
+          yPercent: -50,
           opacity: 0,
           y: 32,
           scale: 0.96,
@@ -206,6 +243,38 @@ const AboutPage = () => {
           scale: 0.78,
           rotate: 0,
         });
+
+        // Keep the existing desktop offsets; smaller scenes reserve space for
+        // the whole rotated card, rather than positioning only its top-left corner.
+        const detailPosition = (piece) => {
+          const width = noticeLayer.clientWidth;
+          const height = noticeLayer.clientHeight;
+          const angle = Number(piece.dataset.rotate) * Math.PI / 180;
+          const cardWidth = piece.offsetWidth;
+          const cardHeight = piece.offsetHeight;
+          const extraX = (Math.abs(Math.cos(angle)) * cardWidth +
+            Math.abs(Math.sin(angle)) * cardHeight - cardWidth) / 2;
+          const extraY = (Math.abs(Math.sin(angle)) * cardWidth +
+            Math.abs(Math.cos(angle)) * cardHeight - cardHeight) / 2;
+          let x = parseFloat(piece.dataset.x) * window.innerWidth / 100;
+          let y = parseFloat(piece.dataset.y) * window.innerHeight / 100;
+          if (width <= 640) {
+            const right = piece.matches('.piece-responsive, .piece-clarity, .piece-timing');
+            const row = piece.matches('.piece-spacing, .piece-responsive') ? 0.15 :
+              piece.matches('.piece-hierarchy, .piece-clarity') ? 0.67 : 0.87;
+            x = width * (right ? 0.25 : -0.25) - cardWidth / 2;
+            y = height * (row - 0.5) - cardHeight / 2;
+          } else if (width <= 1200) {
+            x = piece.matches('.piece-responsive, .piece-clarity, .piece-timing') ?
+              width / 2 - cardWidth - 16 - extraX : -width / 2 + 16 + extraX;
+          }
+          return {
+            x: gsap.utils.clamp(-width / 2 + 8 + extraX,
+              width / 2 - cardWidth - 8 - extraX, x),
+            y: gsap.utils.clamp(-height / 2 + 40 + extraY,
+              height / 2 - cardHeight - 8 - extraY, y),
+          };
+        };
 
         const workflowIntroTl = gsap.timeline({
           scrollTrigger: {
@@ -258,6 +327,7 @@ const AboutPage = () => {
         const workflowTl = gsap.timeline({
           scrollTrigger: {
             id: "workflow-pinned",
+            onUpdate: trackScrollProgress,
             trigger: workflowSection,
             start: "top top",
             end: () => `+=${getScrollDistance()}`,
@@ -344,8 +414,8 @@ const AboutPage = () => {
             detailPieces,
             {
               opacity: 1,
-              x: (index, piece) => piece.getAttribute("data-x"),
-              y: (index, piece) => piece.getAttribute("data-y"),
+              x: (index, piece) => detailPosition(piece).x,
+              y: (index, piece) => detailPosition(piece).y,
               rotate: (index, piece) =>
                 Number(piece.getAttribute("data-rotate")),
               scale: 1,
@@ -367,270 +437,308 @@ const AboutPage = () => {
           );
       };
 
+      const ensureDuplicateIcons = () => {
+        if (duplicateIcons) return;
+        duplicateIcons = iconElements.map((icon) => {
+          const duplicate = icon.cloneNode(true);
+          duplicate.className = "animated-icon duplicate-icon";
+          duplicate.style.position = "absolute";
+          duplicate.style.transform = "none";
+          duplicate.style.width = `${headerIconSize}px`;
+          duplicate.style.height = `${headerIconSize}px`;
+          document.body.appendChild(duplicate);
+          return duplicate;
+        });
+      };
+
+      const positionScaledIcons = (scaleProgress) => {
+        const baseY = -window.innerHeight * 0.3;
+        // Measure the same unscaled starting pose on scroll and refresh.
+        gsap.set(animatedIcons, { x: 0, y: baseY, scale: 1 });
+        const containerRect = animatedIcons.getBoundingClientRect();
+        const deltaX =
+          (window.innerWidth / 2 - (containerRect.left + containerRect.width / 2)) *
+          scaleProgress;
+        const deltaY =
+          (window.innerHeight / 2 - (containerRect.top + containerRect.height / 2)) *
+          scaleProgress;
+
+        gsap.set(animatedIcons, {
+          x: deltaX,
+          y: baseY + deltaY,
+          scale: 1 + (exactScale - 1) * scaleProgress,
+        });
+      };
+
+      const renderHero = (progress) => {
+        textSegments.forEach((segment) => {
+          gsap.set(segment, { opacity: 0 });
+        });
+
+        if (progress <= 0.3) {
+          const moveProgress = progress / 0.3;
+          const containerMoveY = -window.innerHeight * 0.3 * moveProgress;
+
+          if (progress <= 0.15) {
+            const headerProgress = progress / 0.15;
+            const headerMoveY = -50 * headerProgress;
+            const headerOpacity = 1 - headerProgress;
+
+            gsap.set(heroHeader, {
+              transform: `translate(-50%, calc(-50% + ${headerMoveY}px))`,
+              opacity: headerOpacity,
+            });
+          } else {
+            gsap.set(heroHeader, {
+              transform: "translate(-50%, calc(-50% + -50px))",
+              opacity: 0,
+            });
+          }
+
+          if (duplicateIcons) {
+            duplicateIcons.forEach((duplicate) => {
+              if (duplicate.parentNode) {
+                duplicate.parentNode.removeChild(duplicate);
+              }
+            });
+
+            duplicateIcons = null;
+          }
+
+          gsap.set(animatedIcons, {
+            x: 0,
+            y: containerMoveY,
+            scale: 1,
+            opacity: 1,
+          });
+
+          iconElements.forEach((icon, index) => {
+            const staggerDelay = index * 0.1;
+            const iconStart = staggerDelay;
+            const iconEnd = staggerDelay + 0.5;
+
+            const iconProgress = gsap.utils.mapRange(
+              iconStart,
+              iconEnd,
+              0,
+              1,
+              moveProgress
+            );
+
+            const clampedProgress = Math.max(0, Math.min(1, iconProgress));
+            const startOffset = -containerMoveY;
+            const individualY = startOffset * (1 - clampedProgress);
+
+            gsap.set(icon, {
+              x: 0,
+              y: individualY,
+              opacity: 1,
+            });
+          });
+        } else if (progress <= 0.6) {
+          const scaleProgress = (progress - 0.3) / 0.3;
+
+          gsap.set(heroHeader, {
+            transform: "translate(-50%, calc(-50% + -50px))",
+            opacity: 0,
+          });
+
+          if (scaleProgress >= 0.5) {
+            heroSection.style.backgroundColor = "#efefef";
+          } else {
+            heroSection.style.backgroundColor = "#141414";
+          }
+
+          if (duplicateIcons) {
+            duplicateIcons.forEach((duplicate) => {
+              if (duplicate.parentNode) {
+                duplicate.parentNode.removeChild(duplicate);
+              }
+            });
+
+            duplicateIcons = null;
+          }
+
+          positionScaledIcons(scaleProgress);
+          gsap.set(animatedIcons, { opacity: 1 });
+
+          iconElements.forEach((icon) => {
+            gsap.set(icon, {
+              x: 0,
+              y: 0,
+              opacity: 1,
+            });
+          });
+        } else if (progress <= 0.75) {
+          const moveProgress = (progress - 0.6) / 0.15;
+
+          gsap.set(heroHeader, {
+            transform: "translate(-50%, calc(-50% + -50px))",
+            opacity: 0,
+          });
+
+          heroSection.style.backgroundColor = "#efefef";
+
+          positionScaledIcons(1);
+          gsap.set(animatedIcons, {
+            opacity: 0,
+          });
+
+          iconElements.forEach((icon) => {
+            gsap.set(icon, {
+              x: 0,
+              y: 0,
+              opacity: 1,
+            });
+          });
+
+          ensureDuplicateIcons();
+
+          if (duplicateIcons) {
+            duplicateIcons.forEach((duplicate, index) => {
+              if (index < placeholders.length) {
+                const iconRect =
+                  iconElements[index].getBoundingClientRect();
+                const startCenterX = iconRect.left + iconRect.width / 2;
+                const startCenterY = iconRect.top + iconRect.height / 2;
+                const startPageX = startCenterX + window.pageXOffset;
+                const startPageY = startCenterY + window.pageYOffset;
+
+                const targetRect =
+                  placeholders[index].getBoundingClientRect();
+                const targetCenterX =
+                  targetRect.left + targetRect.width / 2;
+                const targetCenterY =
+                  targetRect.top + targetRect.height / 2;
+                const targetPageX = targetCenterX + window.pageXOffset;
+                const targetPageY = targetCenterY + window.pageYOffset;
+
+                const moveX = targetPageX - startPageX;
+                const moveY = targetPageY - startPageY;
+
+                let currentX = 0;
+                let currentY = 0;
+
+                if (moveProgress <= 0.5) {
+                  const verticalProgress = moveProgress / 0.5;
+                  currentY = moveY * verticalProgress;
+                } else {
+                  const horizontalProgress = (moveProgress - 0.5) / 0.5;
+                  currentY = moveY;
+                  currentX = moveX * horizontalProgress;
+                }
+
+                const finalPageX = startPageX + currentX;
+                const finalPageY = startPageY + currentY;
+
+                duplicate.style.left =
+                  finalPageX - headerIconSize / 2 + "px";
+                duplicate.style.top =
+                  finalPageY - headerIconSize / 2 + "px";
+                duplicate.style.opacity = "1";
+                duplicate.style.display = "flex";
+              }
+            });
+          }
+        } else {
+          gsap.set(heroHeader, {
+            transform: `translate(-50%, calc(-50% + -100px))`,
+            opacity: 0,
+          });
+
+          heroSection.style.backgroundColor = "#efefef";
+
+          positionScaledIcons(1);
+          gsap.set(animatedIcons, { opacity: 0 });
+          ensureDuplicateIcons();
+
+          if (duplicateIcons) {
+            duplicateIcons.forEach((duplicate, index) => {
+              if (index < placeholders.length) {
+                const targetRect =
+                  placeholders[index].getBoundingClientRect();
+                const targetCenterX =
+                  targetRect.left + targetRect.width / 2;
+                const targetCenterY =
+                  targetRect.top + targetRect.height / 2;
+                const targetPageX = targetCenterX + window.pageXOffset;
+                const targetPageY = targetCenterY + window.pageYOffset;
+
+                duplicate.style.left =
+                  targetPageX - headerIconSize / 2 + "px";
+                duplicate.style.top =
+                  targetPageY - headerIconSize / 2 + "px";
+                duplicate.style.opacity = "1";
+                duplicate.style.display = "flex";
+              }
+            });
+          }
+
+          textAnimationOrder.forEach((item, randomIndex) => {
+            const segmentStart = 0.75 + randomIndex * 0.03;
+            const segmentEnd = segmentStart + 0.015;
+
+            const segmentProgress = gsap.utils.mapRange(
+              segmentStart,
+              segmentEnd,
+              0,
+              1,
+              progress
+            );
+
+            const clampedProgress = Math.max(
+              0,
+              Math.min(1, segmentProgress)
+            );
+
+            gsap.set(item.segment, {
+              opacity: clampedProgress,
+            });
+          });
+        }
+      };
+
+      const onRefreshInit = () => {
+        if (!heroScroll) return;
+        const resized =
+          viewportWidth !== window.innerWidth ||
+          viewportHeight !== window.innerHeight;
+        viewportWidth = window.innerWidth;
+        viewportHeight = window.innerHeight;
+        if (!resized) return;
+
+        // Refresh temporarily reverts pins/progress; retain the last scroll state.
+        resizeState = activeScrollState && { ...activeScrollState };
+      };
+
+      const onRefresh = () => {
+        if (!heroScroll) return;
+        measureIconGeometry();
+        const previousState = resizeState;
+        resizeState = null;
+        if (previousState) {
+          const { trigger, progress } = previousState;
+          trigger.scroll(trigger.start + (trigger.end - trigger.start) * progress);
+          ScrollTrigger.update();
+        }
+        renderHero(heroScroll.progress);
+      };
+
+      ScrollTrigger.addEventListener("refreshInit", onRefreshInit);
+      ScrollTrigger.addEventListener("refresh", onRefresh);
+
       const createHeroScroll = () => {
-        ScrollTrigger.create({
+        heroScroll = ScrollTrigger.create({
           id: "about-hero-scroll",
-          trigger: ".about-page-hero",
+          trigger: heroSection,
           start: "top top",
-          end: `+=${window.innerHeight * 8}px`,
+          end: () => `+=${window.innerHeight * 8}px`,
           pin: true,
           pinSpacing: true,
           scrub: 1,
-
           onUpdate: (self) => {
-            const progress = self.progress;
-
-            textSegments.forEach((segment) => {
-              gsap.set(segment, { opacity: 0 });
-            });
-
-            if (progress <= 0.3) {
-              const moveProgress = progress / 0.3;
-              const containerMoveY = -window.innerHeight * 0.3 * moveProgress;
-
-              if (progress <= 0.15) {
-                const headerProgress = progress / 0.15;
-                const headerMoveY = -50 * headerProgress;
-                const headerOpacity = 1 - headerProgress;
-
-                gsap.set(heroHeader, {
-                  transform: `translate(-50%, calc(-50% + ${headerMoveY}px))`,
-                  opacity: headerOpacity,
-                });
-              } else {
-                gsap.set(heroHeader, {
-                  transform: "translate(-50%, calc(-50% + -50px))",
-                  opacity: 0,
-                });
-              }
-
-              if (window.aboutDuplicateIcons) {
-                window.aboutDuplicateIcons.forEach((duplicate) => {
-                  if (duplicate.parentNode) {
-                    duplicate.parentNode.removeChild(duplicate);
-                  }
-                });
-
-                window.aboutDuplicateIcons = null;
-              }
-
-              gsap.set(animatedIcons, {
-                x: 0,
-                y: containerMoveY,
-                scale: 1,
-                opacity: 1,
-              });
-
-              iconElements.forEach((icon, index) => {
-                const staggerDelay = index * 0.1;
-                const iconStart = staggerDelay;
-                const iconEnd = staggerDelay + 0.5;
-
-                const iconProgress = gsap.utils.mapRange(
-                  iconStart,
-                  iconEnd,
-                  0,
-                  1,
-                  moveProgress
-                );
-
-                const clampedProgress = Math.max(0, Math.min(1, iconProgress));
-                const startOffset = -containerMoveY;
-                const individualY = startOffset * (1 - clampedProgress);
-
-                gsap.set(icon, {
-                  x: 0,
-                  y: individualY,
-                  opacity: 1,
-                });
-              });
-            } else if (progress <= 0.6) {
-              const scaleProgress = (progress - 0.3) / 0.3;
-
-              gsap.set(heroHeader, {
-                transform: "translate(-50%, calc(-50% + -50px))",
-                opacity: 0,
-              });
-
-              if (scaleProgress >= 0.5) {
-                heroSection.style.backgroundColor = "#efefef";
-              } else {
-                heroSection.style.backgroundColor = "#141414";
-              }
-
-              if (window.aboutDuplicateIcons) {
-                window.aboutDuplicateIcons.forEach((duplicate) => {
-                  if (duplicate.parentNode) {
-                    duplicate.parentNode.removeChild(duplicate);
-                  }
-                });
-
-                window.aboutDuplicateIcons = null;
-              }
-
-              const targetCenterY = window.innerHeight / 2;
-              const targetCenterX = window.innerWidth / 2;
-              const containerRect = animatedIcons.getBoundingClientRect();
-              const currentCenterX =
-                containerRect.left + containerRect.width / 2;
-              const currentCenterY =
-                containerRect.top + containerRect.height / 2;
-              const deltaX = (targetCenterX - currentCenterX) * scaleProgress;
-              const deltaY = (targetCenterY - currentCenterY) * scaleProgress;
-              const baseY = -window.innerHeight * 0.3;
-              const currentScale = 1 + (exactScale - 1) * scaleProgress;
-
-              gsap.set(animatedIcons, {
-                x: deltaX,
-                y: baseY + deltaY,
-                scale: currentScale,
-                opacity: 1,
-              });
-
-              iconElements.forEach((icon) => {
-                gsap.set(icon, {
-                  x: 0,
-                  y: 0,
-                  opacity: 1,
-                });
-              });
-            } else if (progress <= 0.75) {
-              const moveProgress = (progress - 0.6) / 0.15;
-
-              gsap.set(heroHeader, {
-                transform: "translate(-50%, calc(-50% + -50px))",
-                opacity: 0,
-              });
-
-              heroSection.style.backgroundColor = "#efefef";
-
-              gsap.set(animatedIcons, {
-                opacity: 0,
-              });
-
-              iconElements.forEach((icon) => {
-                gsap.set(icon, {
-                  x: 0,
-                  y: 0,
-                  opacity: 1,
-                });
-              });
-
-              if (!window.aboutDuplicateIcons) {
-                window.aboutDuplicateIcons = [];
-
-                iconElements.forEach((icon) => {
-                  const duplicate = icon.cloneNode(true);
-                  duplicate.className = "animated-icon duplicate-icon";
-                  duplicate.style.position = "absolute";
-                  duplicate.style.width = headerIconSize + "px";
-                  duplicate.style.height = headerIconSize + "px";
-
-                  document.body.appendChild(duplicate);
-                  window.aboutDuplicateIcons.push(duplicate);
-                });
-              }
-
-              if (window.aboutDuplicateIcons) {
-                window.aboutDuplicateIcons.forEach((duplicate, index) => {
-                  if (index < placeholders.length) {
-                    const iconRect =
-                      iconElements[index].getBoundingClientRect();
-                    const startCenterX = iconRect.left + iconRect.width / 2;
-                    const startCenterY = iconRect.top + iconRect.height / 2;
-                    const startPageX = startCenterX + window.pageXOffset;
-                    const startPageY = startCenterY + window.pageYOffset;
-
-                    const targetRect =
-                      placeholders[index].getBoundingClientRect();
-                    const targetCenterX =
-                      targetRect.left + targetRect.width / 2;
-                    const targetCenterY =
-                      targetRect.top + targetRect.height / 2;
-                    const targetPageX = targetCenterX + window.pageXOffset;
-                    const targetPageY = targetCenterY + window.pageYOffset;
-
-                    const moveX = targetPageX - startPageX;
-                    const moveY = targetPageY - startPageY;
-
-                    let currentX = 0;
-                    let currentY = 0;
-
-                    if (moveProgress <= 0.5) {
-                      const verticalProgress = moveProgress / 0.5;
-                      currentY = moveY * verticalProgress;
-                    } else {
-                      const horizontalProgress = (moveProgress - 0.5) / 0.5;
-                      currentY = moveY;
-                      currentX = moveX * horizontalProgress;
-                    }
-
-                    const finalPageX = startPageX + currentX;
-                    const finalPageY = startPageY + currentY;
-
-                    duplicate.style.left =
-                      finalPageX - headerIconSize / 2 + "px";
-                    duplicate.style.top =
-                      finalPageY - headerIconSize / 2 + "px";
-                    duplicate.style.opacity = "1";
-                    duplicate.style.display = "flex";
-                  }
-                });
-              }
-            } else {
-              gsap.set(heroHeader, {
-                transform: `translate(-50%, calc(-50% + -100px))`,
-                opacity: 0,
-              });
-
-              heroSection.style.backgroundColor = "#efefef";
-
-              gsap.set(animatedIcons, { opacity: 0 });
-
-              if (window.aboutDuplicateIcons) {
-                window.aboutDuplicateIcons.forEach((duplicate, index) => {
-                  if (index < placeholders.length) {
-                    const targetRect =
-                      placeholders[index].getBoundingClientRect();
-                    const targetCenterX =
-                      targetRect.left + targetRect.width / 2;
-                    const targetCenterY =
-                      targetRect.top + targetRect.height / 2;
-                    const targetPageX = targetCenterX + window.pageXOffset;
-                    const targetPageY = targetCenterY + window.pageYOffset;
-
-                    duplicate.style.left =
-                      targetPageX - headerIconSize / 2 + "px";
-                    duplicate.style.top =
-                      targetPageY - headerIconSize / 2 + "px";
-                    duplicate.style.opacity = "1";
-                    duplicate.style.display = "flex";
-                  }
-                });
-              }
-
-              textAnimationOrder.forEach((item, randomIndex) => {
-                const segmentStart = 0.75 + randomIndex * 0.03;
-                const segmentEnd = segmentStart + 0.015;
-
-                const segmentProgress = gsap.utils.mapRange(
-                  segmentStart,
-                  segmentEnd,
-                  0,
-                  1,
-                  progress
-                );
-
-                const clampedProgress = Math.max(
-                  0,
-                  Math.min(1, segmentProgress)
-                );
-
-                gsap.set(item.segment, {
-                  opacity: clampedProgress,
-                });
-              });
-            }
+            trackScrollProgress(self);
+            renderHero(self.progress);
           },
         });
 
@@ -689,12 +797,15 @@ const AboutPage = () => {
         );
 
       return () => {
-        if (window.aboutDuplicateIcons) {
-          window.aboutDuplicateIcons.forEach((duplicate) => {
+        ScrollTrigger.removeEventListener("refreshInit", onRefreshInit);
+        ScrollTrigger.removeEventListener("refresh", onRefresh);
+
+        if (duplicateIcons) {
+          duplicateIcons.forEach((duplicate) => {
             duplicate.remove();
           });
 
-          window.aboutDuplicateIcons = null;
+          duplicateIcons = null;
         }
 
         ScrollTrigger.getById("about-hero-scroll")?.kill();

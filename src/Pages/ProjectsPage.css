@@ -87,6 +87,7 @@
   }
 
   .projects-opener-top {
+    container-type: inline-size;
     grid-template-columns: 1fr auto;
     gap: 1rem;
   }
@@ -103,7 +104,7 @@
 
   .projects-title {
     grid-column: 1 / -1;
-    font-size: clamp(3.5rem, 18vw, 6rem);
+    font-size: min(clamp(3.5rem, 18vw, 6rem), calc(100cqi / 5.45));
   }
 
   .projects-faded-word {

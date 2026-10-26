@@ -185,6 +185,11 @@
   margin-left: 12.5rem;
 }
 
+/* Keep the editorial offset within the space beside the chapter number. */
+.project-oocaa .chapter-number-02 {
+  margin-left: min(12.5rem, max(0px, calc(100% - 900px)));
+}
+
 .chapter-heading-02 {
   text-align: left;
 }
@@ -1436,6 +1441,10 @@
     font-size: clamp(3.2rem, 16vw, 6rem);
   }
 
+  .project-oocaa .chapter-heading-02 span {
+    white-space: normal;
+  }
+
   .project-screen-copy {
     grid-template-columns: 1fr;
   }
@@ -1499,6 +1508,10 @@
 
   .project-detail-hero {
     padding-top: 8rem;
+  }
+
+  .project-oocaa .project-detail-hero .project-detail-title {
+    font-size: min(4rem, calc((100vw - 2.5rem) / 5.2));
   }
 
   .project-detail-facts-grid {

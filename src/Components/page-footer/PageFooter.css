@@ -218,46 +218,71 @@
 /* Mobile */
 @media (max-width: 640px) {
   .page-footer-inner {
-    padding: 1.25rem;
+    padding: 8rem 1.25rem 1.25rem;
     justify-content: center;
+    gap: clamp(2rem, 6svh, 4rem);
   }
 
   .page-footer-resume-button {
-    top: 2rem;
-    font-size: 0.95rem;
-    padding: 0.95rem 1.1rem;
+    --resume-navigation-bottom: 3.25rem;
+    top: max(
+      calc(var(--resume-navigation-bottom) + 0.75rem),
+      clamp(3.75rem, 8svh, 4.6875rem)
+    );
+    font-size: 0.875rem;
+    padding: 0.75rem 0.875rem;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    white-space: nowrap;
+  }
+
+  .page-footer-resume-button svg {
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .page-footer-main {
-    margin-top: 2rem;
+    margin-block: auto;
   }
 
   .page-footer-kicker {
     margin-bottom: 2rem;
   }
 
+  .page-footer-title-wrap {
+    /* Query only this static headline wrapper, never a pinned ancestor. */
+    container-type: inline-size;
+    display: block;
+    padding-top: 3.5rem;
+  }
+
   .page-footer-title {
     flex-direction: column;
     align-items: center;
     gap: 0;
-    font-size: clamp(4.5rem, 24vw, 7.5rem);
+    font-size: clamp(4rem, calc(100cqi / 3.7), 7.5rem);
+    white-space: nowrap;
+    flex-wrap: nowrap;
     line-height: 0.82;
     letter-spacing: -0.075em;
   }
 
   .page-footer-title-italic {
-    margin-left: 0;
+    margin-left: 0.65em;
     letter-spacing: -0.07em;
   }
 
   .page-footer-annotation {
-    position: static;
-    margin-top: 1.25rem;
-    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    margin-top: 0;
+    justify-content: flex-end;
   }
 
   .page-footer-arrow {
-    display: none;
+    display: block;
+    width: 3rem;
   }
 
   .page-footer-note {
@@ -266,16 +291,38 @@
 
   .page-footer-links {
     margin-top: 1.75rem;
-    gap: 1rem 1.25rem;
-    max-width: 20rem;
+    gap: clamp(0.5rem, 3vw, 1.25rem);
+    max-width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .page-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 
   .page-footer-copy {
-    left: 50%;
-    bottom: 1.25rem;
-    transform: translateX(-50%);
-    width: calc(100% - 2.5rem);
+    position: static;
+    transform: none;
+    width: 100%;
     text-align: center;
     font-size: 0.95rem;
+  }
+}
+
+/* The existing navigation wraps once its four links no longer fit in 60%. */
+@media (max-width: 21.75rem) {
+  .page-footer-resume-button {
+    --resume-navigation-bottom: 4.8rem;
+  }
+}
+
+@media (max-width: 21.75rem) and (max-height: 38rem) {
+  .page-footer-inner {
+    /* Wrapped navigation + gap + compact touch target + content clearance. */
+    padding-top: calc(4.8rem + 0.75rem + 2.75rem + 1rem);
   }
 }

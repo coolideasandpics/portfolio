@@ -1,4 +1,3 @@
-@import url("https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap");
 
 .about-root {
   background: #efefef;
@@ -83,7 +82,8 @@
 }
 
 .about-title {
-  max-width: 1300px;
+  /* Preserve the 1440px reference box, then grow with the full-width hero. */
+  max-width: max(1300px, calc(100vw - 140px));
   font-size: clamp(5rem, 10vw, 13rem);
   line-height: 0.82;
   letter-spacing: -0.01em;
@@ -440,6 +440,8 @@
 }
 
 .role-panel-copy {
+  /* Query the static text area, not the pinned or animated layers. */
+  container-type: inline-size;
   width: 100%;
   max-width: 760px;
   height: 100%;
@@ -450,8 +452,11 @@
 
 .role-panel h3 {
   max-width: 11ch;
-  min-height: clamp(8rem, 10vw, 13.5rem);
-  font-size: clamp(3.4rem, 5.4vw, 7.4rem);
+  min-height: min(clamp(8rem, 10vw, 13.5rem), 4lh);
+  font-size: min(
+    var(--role-heading-size, clamp(3.4rem, 5.4vw, 7.4rem)),
+    calc(100cqi / 7.9)
+  );
   line-height: 0.86;
   letter-spacing: -0.01em;
   font-weight: 700;
@@ -753,7 +758,7 @@
 
   .role-panel h3 {
     max-width: 9ch;
-    font-size: clamp(3rem, 11vw, 6rem);
+    --role-heading-size: clamp(3rem, 11vw, 6rem);
     line-height: 0.86;
   }
 
@@ -970,7 +975,7 @@
 
   .role-panel h3 {
     max-width: 9ch;
-    font-size: clamp(2.05rem, 10.5vw, 3.65rem);
+    --role-heading-size: clamp(2.05rem, 10.5vw, 3.65rem);
     line-height: 0.88;
     overflow-wrap: normal;
     word-break: normal;
@@ -1103,7 +1108,7 @@
 
   .role-panel h3 {
     max-width: 10ch;
-    font-size: clamp(2rem, 9.85vw, 3.55rem);
+    --role-heading-size: clamp(2rem, 9.85vw, 3.55rem);
     line-height: 0.9;
   }
 
@@ -1164,7 +1169,7 @@
   }
 
   .role-panel h3 {
-    font-size: clamp(2.1rem, 11vw, 3.5rem);
+    --role-heading-size: clamp(2.1rem, 11vw, 3.5rem);
   }
 
   .role-panel-copy p {
@@ -1189,5 +1194,58 @@
   .about-belief-card:hover,
   .detail-piece:hover .detail-piece-inner {
     transform: none;
+  }
+}
+
+/* Section 03: reserve a readable center and keep complete floating cards in view. */
+@media (max-width: 75rem) {
+  .notice-main-title {
+    width: 40%;
+    max-width: none;
+    font-size: min(clamp(3.4rem, 13vw, 7rem), calc((100vw - 3rem) * 0.4 / 6.8));
+  }
+
+  .detail-piece,
+  .piece-hierarchy,
+  .piece-responsive {
+    width: calc(27% - 0.5rem);
+  }
+
+  .detail-piece h3 {
+    font-size: min(clamp(1.2rem, 4.3vw, 2rem), calc((27vw - 3rem) / 9.2));
+  }
+}
+
+@media (max-width: 640px) {
+  .notice-main-title {
+    top: 40%;
+    width: calc(100% - 2rem);
+    font-size: min(clamp(2rem, 10vw, 4rem), calc((100svh - 24rem) / 5.04));
+  }
+
+  .detail-piece,
+  .piece-hierarchy,
+  .piece-responsive {
+    width: calc((100% - 3rem) / 2);
+    min-height: clamp(100px, 13svh, 125px);
+  }
+
+  .detail-piece h3 {
+    font-size: min(clamp(0.88rem, 3.9vw, 1.2rem), calc((100vw - 6rem) / 18.4));
+  }
+
+  .detail-piece p {
+    max-width: none;
+    font-size: clamp(0.72rem, 3vw, 0.82rem);
+  }
+}
+
+@media (min-width: 75.001rem) {
+  .piece-responsive .detail-piece-inner {
+    container-type: inline-size;
+  }
+
+  .piece-responsive h3 {
+    font-size: min(clamp(1.7rem, 2.2vw, 3rem), calc(100cqi / 9.25));
   }
 }
