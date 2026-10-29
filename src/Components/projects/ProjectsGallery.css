@@ -2,6 +2,10 @@
    Featured / Projects Cards
 ========================= */
 
+.home-projects {
+  position: relative;
+}
+
 .projects-gallery {
   width: 100%;
   padding: 3rem 1.5rem 8rem;
@@ -70,9 +74,30 @@
 
 .projects-gallery-stack.is-stacked {
   position: relative;
-  height: clamp(700px, 78vh, 820px);
+  height: max(700px, 78vh);
   margin-top: 4rem;
   margin-bottom: 6rem;
+}
+
+.projects-gallery-stack.is-flowing {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.is-flowing .feature-project-link,
+.is-flowing .feature-project-card {
+  height: auto;
+}
+
+.is-flowing .feature-project-left {
+  justify-content: flex-start;
+}
+
+.is-flowing .feature-project-image-wrap {
+  position: absolute;
+  inset: 0;
 }
 
 .projects-gallery-stack.is-list {
@@ -346,12 +371,35 @@
 }
 
 @media (max-width: 1100px) {
+  .feature-project-link,
+  .feature-project-card {
+    height: auto;
+  }
+
   .feature-project-card {
     grid-template-columns: 1fr;
   }
 
   .feature-project-right {
-    min-height: 28rem;
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+    max-height: 32rem;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+
+  .feature-project-left {
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+
+  .feature-project-image-wrap {
+    position: absolute;
+    inset: 0;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+
+  .feature-project-number {
+    top: 1rem;
+    right: 1rem;
   }
 
   .feature-project-title,

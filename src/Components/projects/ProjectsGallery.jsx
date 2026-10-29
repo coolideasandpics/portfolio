@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +13,7 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
   const container = useRef(null);
   const tlRef = useRef(null);
   const triggerRef = useRef(null);
+  const [canStack, setCanStack] = useState(false);
 
   const displayedProjects = enableStack ? projects.slice(0, 3) : projects;
 
@@ -22,16 +23,17 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
     const trigger = triggerRef.current;
     const tl = tlRef.current;
 
-    if (!trigger || !tl) return;
-
-    const totalDuration = tl.duration();
-    const targetTimes = [0, 1, 2.45];
-
-    const targetTime = targetTimes[targetIndex] ?? 0;
-    const progress = targetTime / totalDuration;
-
-    const targetScroll =
-      trigger.start + (trigger.end - trigger.start) * progress;
+    let targetScroll;
+    if (trigger && tl) {
+      const targetTimes = [0, 1, 2.45];
+      const progress = (targetTimes[targetIndex] ?? 0) / tl.duration();
+      targetScroll = trigger.start + (trigger.end - trigger.start) * progress;
+    } else {
+      const card = container.current.querySelectorAll(".feature-project-link")[targetIndex];
+      if (!card) return;
+      const clearance = (document.querySelector("nav")?.offsetHeight || 0) + 16;
+      targetScroll = card.getBoundingClientRect().top + window.scrollY - clearance;
+    }
 
     const scrollProxy = { y: window.scrollY };
 
@@ -45,13 +47,50 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
     });
   };
 
+  useLayoutEffect(() => {
+    if (!enableStack) return;
+    let frame;
+    const panels = [...container.current.querySelectorAll(".feature-project-left")];
+    const measure = () => {
+      const requiredHeight = Math.max(...panels.map((panel) => {
+        const style = getComputedStyle(panel);
+        return parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) +
+          [...panel.children].reduce((height, child) => {
+            const childStyle = getComputedStyle(child);
+            return height + child.getBoundingClientRect().height +
+              parseFloat(childStyle.marginTop) + parseFloat(childStyle.marginBottom);
+          }, 0);
+      }));
+      // Allow border and fractional flex rounding without changing the reference pin.
+      setCanStack(window.innerWidth > 1100 && requiredHeight <= window.innerHeight * 0.78 + 2);
+    };
+    const scheduleMeasure = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
+    };
+    const observer = new ResizeObserver(scheduleMeasure);
+    panels.forEach((panel) => [...panel.children].forEach((child) => observer.observe(child)));
+    window.addEventListener("resize", scheduleMeasure);
+    document.fonts.addEventListener("loadingdone", scheduleMeasure);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("resize", scheduleMeasure);
+      document.fonts.removeEventListener("loadingdone", scheduleMeasure);
+    };
+  }, [enableStack]);
+
   useGSAP(
     () => {
-      if (!enableStack) return;
+      if (!enableStack || !canStack) {
+        ScrollTrigger.refresh();
+        return;
+      }
 
       const mm = gsap.matchMedia();
 
-      mm.add("(min-width: 901px)", () => {
+      mm.add("(min-width: 1101px)", () => {
         const stack = container.current.querySelector(
           ".projects-gallery-stack"
         );
@@ -81,6 +120,7 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
             start: "center 60%",
             end: `+=${cards.length * 900}`,
             pin: true,
+            refreshPriority: 1,
             scrub: 1,
             invalidateOnRefresh: true,
           },
@@ -101,12 +141,15 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
 
         return () => {
           tl.kill();
+          tlRef.current = null;
+          triggerRef.current = null;
         };
       });
 
+      ScrollTrigger.refresh();
       return () => mm.revert();
     },
-    { scope: container, dependencies: [enableStack] }
+    { scope: container, dependencies: [enableStack, canStack], revertOnUpdate: true }
   );
 
   return (
@@ -136,7 +179,7 @@ const ProjectsGallery = ({ showTitle = false, enableStack = false }) => {
 
       <div
         className={`projects-gallery-stack ${
-          enableStack ? "is-stacked" : "is-list"
+          enableStack ? `is-stacked ${canStack ? "is-pinnable" : "is-flowing"}` : "is-list"
         }`}
       >
         {displayedProjects.map((project, index) => (

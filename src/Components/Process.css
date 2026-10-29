@@ -17,7 +17,7 @@
 }
 .process-intro h1 {
   font-weight: 600;
-  font-size: clamp(5rem, 14vw, 16rem);
+  font-size: min(clamp(5rem, 14vw, 16rem), calc(100cqi / 6.5));
   transform-origin: center center;
   will-change: transform, opacity;
 }
@@ -28,16 +28,26 @@
 }
 
 .process-intro {
-  height: 70svh;
+  container-type: inline-size;
+  min-height: 70svh;
+  padding-block: clamp(1rem, 4svh, 2rem);
   text-align: center;
   align-content: center;
   background-color: #efefef;
 }
 
 .process-title {
-  height: 65svh;
+  container-type: inline-size;
+  min-height: 65svh;
+  padding-block: clamp(1rem, 4svh, 2rem);
   display: flex;
   align-items: center;
+}
+
+.process-title-container h1 {
+  /* Fit STRUCTURE inside 40px gutters, accounting for the existing tracking. */
+  font-size: min(10rem, calc((100cqi - 0.25rem) / 6.2));
+  white-space: nowrap;
 }
 
 .process-title-container {
@@ -58,6 +68,7 @@
 }
 
 .process-title-copy {
+  width: min(580px, calc(100% - 2.5rem));
   max-width: 580px;
   text-align: center;
   opacity: 0;

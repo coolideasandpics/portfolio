@@ -106,20 +106,30 @@
 
 @media (max-width: 1000px) {
   .hero-tagline {
-    font-size: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: min(7rem, calc((100vw - 2.5rem) / 4.2), calc((100svh - 10rem) / 4.2));
+  }
+
+  .hero-tagline br {
+    display: none;
+  }
+
+  .word-shaping,
+  .word-into {
+    margin-right: 0;
   }
 }
 
 @media (max-width: 768px) {
   .hero-tagline {
-    font-size: 5rem;
     line-height: 0.9;
   }
 }
 
 @media (max-width: 480px) {
   .hero-tagline {
-    font-size: 3.6rem;
     line-height: 0.92;
   }
 }

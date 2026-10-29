@@ -63,6 +63,41 @@ const About = () => {
           0.25
         );
 
+      const headers = q(".services-header");
+      const services = q(".services")[0];
+      const servicesCopy = q(".services-copy")[0];
+      const paragraph = q(".animate-text")[0];
+      const headingRange = document.createRange();
+      headingRange.selectNodeContents(headers[1]);
+      let paragraphTop = 0;
+      let headingBottomOffset = 0;
+      let headingGap = 0;
+
+      const measurePlacement = () => {
+        // Pin refreshes can re-parent the section, invalidating a live text range.
+        headingRange.selectNodeContents(headers[1]);
+        const scale = Number(gsap.getProperty(headers[1], "scaleY")) || 1;
+        const textRect = headingRange.getClientRects()[0] || headingRange.getBoundingClientRect();
+        const headerRect = headers[1].getBoundingClientRect();
+        const lineHeight = parseFloat(getComputedStyle(headers[1]).lineHeight);
+        const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        headingGap = 1.5 * rem;
+        headingBottomOffset = (textRect.bottom - headerRect.top) / scale -
+          lineHeight / 2;
+
+        if (window.innerWidth <= 1000) {
+          const navHeight = document.querySelector("nav")?.offsetHeight || 0;
+          const padding = parseFloat(getComputedStyle(servicesCopy).paddingTop);
+          const clearance = navHeight + rem + textRect.height / scale * 0.3 +
+            headingGap - padding;
+          servicesCopy.style.setProperty("--services-copy-clearance", `${clearance}px`);
+        } else {
+          servicesCopy.style.removeProperty("--services-copy-clearance");
+        }
+        paragraphTop = paragraph.getBoundingClientRect().top + window.scrollY;
+      };
+
+      measurePlacement();
       const textElements = gsap.utils.toArray(".animate-text");
 
       textElements.forEach((textElement) => {
@@ -79,8 +114,6 @@ const About = () => {
           },
         });
       });
-
-      const headers = gsap.utils.toArray(".services-header");
 
       gsap.set(headers[0], { xPercent: 100 });
       gsap.set(headers[1], { xPercent: -100 });
@@ -106,49 +139,70 @@ const About = () => {
         },
       });
 
+      const updateServices = (self) => {
+        if (self.progress <= 0.5) {
+          const yProgress = self.progress / 0.5;
+
+          gsap.set(headers, { scale: 1, y: 0 });
+
+          gsap.set(headers[0], {
+            yPercent: yProgress * 100,
+          });
+
+          gsap.set(headers[2], {
+            yPercent: yProgress * -100,
+          });
+        } else {
+          gsap.set(headers[0], {
+            yPercent: 100,
+          });
+
+          gsap.set(headers[2], {
+            yPercent: -100,
+          });
+
+          const scaleProgress = (self.progress - 0.5) / 0.5;
+          const minScale = window.innerWidth <= 1000 ? 0.3 : 0.1;
+          const scale = 1 - scaleProgress * (1 - minScale);
+          const scroll = self.start + self.progress * (self.end - self.start);
+          const bottom = services.offsetHeight / 2 + headingBottomOffset * scale;
+          const y = window.innerWidth <= 1000
+            ? Math.min(0, paragraphTop - scroll - headingGap - bottom)
+            : 0;
+
+          headers.forEach((header) => {
+            gsap.set(header, { scale, y });
+          });
+        }
+      };
+
+      ScrollTrigger.addEventListener("refreshInit", measurePlacement);
       ScrollTrigger.create({
-        trigger: ".services",
+        trigger: services,
         start: "top top",
-        end: `+=${window.innerHeight * 2}`,
+        end: () => `+=${window.innerHeight * 2}`,
         pin: true,
         scrub: 1,
         pinSpacing: false,
-        onUpdate: (self) => {
-          if (self.progress <= 0.5) {
-            const yProgress = self.progress / 0.5;
-
-            gsap.set(headers[0], {
-              yPercent: yProgress * 100,
-            });
-
-            gsap.set(headers[2], {
-              yPercent: yProgress * -100,
-            });
-          } else {
-            gsap.set(headers[0], {
-              yPercent: 100,
-            });
-
-            gsap.set(headers[2], {
-              yPercent: -100,
-            });
-
-            const scaleProgress = (self.progress - 0.5) / 0.5;
-            const minScale = window.innerWidth <= 1000 ? 0.3 : 0.1;
-            const scale = 1 - scaleProgress * (1 - minScale);
-
-            headers.forEach((header) => {
-              gsap.set(header, { scale });
-            });
-          }
+        onUpdate: updateServices,
+        onRefresh: () => {
+          paragraphTop = paragraph.getBoundingClientRect().top + window.scrollY;
         },
       });
+
+      const refreshFonts = () => ScrollTrigger.refresh();
+      document.fonts.addEventListener("loadingdone", refreshFonts);
+      return () => {
+        ScrollTrigger.removeEventListener("refreshInit", measurePlacement);
+        document.fonts.removeEventListener("loadingdone", refreshFonts);
+        servicesCopy.style.removeProperty("--services-copy-clearance");
+      };
     },
     { scope: container }
   );
 
   return (
-    <main ref={container}>
+    <main ref={container} className="home-introduction">
       <section className="about">
         <div className="about-hero-reveal"></div>
 

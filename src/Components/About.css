@@ -132,6 +132,14 @@
   ========================= */
 
 @media (max-width: 1000px) {
+  .home-introduction {
+    background-color: #0f0f0f;
+  }
+
+  .home-introduction .services-copy {
+    background-color: transparent;
+  }
+
   .about-hero-title {
     width: min(84vw, 820px);
     font-size: clamp(2rem, 4.5vw, 3.4rem);
@@ -179,7 +187,7 @@
   }
 
   .services-copy {
-    margin-top: 120svh;
+    margin-top: max(120svh, calc(100svh + var(--services-copy-clearance, 6rem)));
     padding: 4rem 1.25rem 18svh 1.25rem;
   }
 
@@ -220,7 +228,7 @@
   }
 
   .services-copy {
-    margin-top: 105svh;
+    margin-top: max(105svh, calc(100svh + var(--services-copy-clearance, 6rem)));
     padding: 3rem 1rem 14svh 1rem;
   }
 
