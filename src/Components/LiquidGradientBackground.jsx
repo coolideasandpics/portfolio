@@ -379,7 +379,7 @@ const LiquidGradientBackground = () => {
 
           float luminance = dot(color, vec3(0.299, 0.587, 0.114));
           color = mix(vec3(luminance), color, 1.04);
-          color = pow(color, vec3(0.92));
+          color = pow(max(color, vec3(0.0)), vec3(0.92));
 
           float brightness1 = length(color);
           float mixFactor1 = max(brightness1 * 1.2, 0.15);
