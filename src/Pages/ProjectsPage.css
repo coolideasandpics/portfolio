@@ -89,21 +89,30 @@
   .projects-opener-top {
     container-type: inline-size;
     grid-template-columns: 1fr auto;
-    gap: 1rem;
+    gap: 0 1rem;
+  }
+
+  .projects-count-left,
+  .projects-count-right {
+    grid-row: 1;
+    font-size: 1.25rem;
   }
 
   .projects-count-left {
-    display: none;
+    display: block;
+    grid-column: 1;
   }
 
   .projects-count-right {
+    grid-column: 2;
     justify-self: end;
-    padding-top: 0.35rem;
-    font-size: 1.25rem;
+    padding-top: 0;
   }
 
   .projects-title {
     grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: clamp(0.5rem, 2cqi, 1rem);
     font-size: min(clamp(3.5rem, 18vw, 6rem), calc(100cqi / 5.45));
   }
 

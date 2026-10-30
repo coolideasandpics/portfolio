@@ -12,7 +12,41 @@ const ProjectsPage = () => {
 
   useGSAP(
     () => {
+      const entranceBounds = new Map();
+      const measureEntrance = (selector) => {
+        const element = pageRef.current.querySelector(selector);
+        const x = Number(gsap.getProperty(element, "x")) || 0;
+        const bounds = element.getBoundingClientRect();
+
+        entranceBounds.set(selector, {
+          element,
+          min: x - bounds.left,
+          max: x + document.documentElement.clientWidth - bounds.right,
+        });
+      };
+      const boundedX = (selector, value) => {
+        const { min, max } = entranceBounds.get(selector);
+        return gsap.utils.clamp(min, max, parseFloat(value));
+      };
+      const entranceOffset = (selector, distance) => {
+        measureEntrance(selector);
+        return boundedX(selector, distance);
+      };
+      const entranceModifier = (selector) => ({
+        x: (value) => `${boundedX(selector, value)}px`,
+      });
+      const resizeEntrance = () => {
+        entranceBounds.forEach((_, selector) => {
+          measureEntrance(selector);
+          const { element } = entranceBounds.get(selector);
+          const x = Number(gsap.getProperty(element, "x")) || 0;
+          const nextX = boundedX(selector, x);
+          if (nextX !== x) gsap.set(element, { x: nextX });
+        });
+      };
+
       const tl = gsap.timeline({
+        onComplete: () => window.removeEventListener("resize", resizeEntrance),
         defaults: {
           ease: "power4.out",
         },
@@ -33,12 +67,12 @@ const ProjectsPage = () => {
       );
 
       gsap.set(".projects-count-left", {
-        x: -40,
+        x: entranceOffset(".projects-count-left", -40),
         y: 20,
       });
 
       gsap.set(".projects-count-right", {
-        x: 40,
+        x: entranceOffset(".projects-count-right", 40),
         y: 20,
       });
 
@@ -47,14 +81,15 @@ const ProjectsPage = () => {
       });
 
       gsap.set(".projects-opener-label", {
-        x: -24,
+        x: entranceOffset(".projects-opener-label", -24),
       });
 
       gsap.set(".projects-opener-copy", {
-        x: 32,
+        x: entranceOffset(".projects-opener-copy", 32),
       });
 
       tl.to(".projects-count-left", {
+        modifiers: entranceModifier(".projects-count-left"),
         opacity: 1,
         x: 0,
         y: 0,
@@ -63,6 +98,7 @@ const ProjectsPage = () => {
         .to(
           ".projects-count-right",
           {
+            modifiers: entranceModifier(".projects-count-right"),
             opacity: 1,
             x: 0,
             y: 0,
@@ -82,6 +118,7 @@ const ProjectsPage = () => {
         .to(
           ".projects-opener-label",
           {
+            modifiers: entranceModifier(".projects-opener-label"),
             opacity: 1,
             x: 0,
             duration: 0.75,
@@ -91,12 +128,16 @@ const ProjectsPage = () => {
         .to(
           ".projects-opener-copy",
           {
+            modifiers: entranceModifier(".projects-opener-copy"),
             opacity: 1,
             x: 0,
             duration: 0.85,
           },
           "-=0.6"
         );
+
+      window.addEventListener("resize", resizeEntrance);
+      return () => window.removeEventListener("resize", resizeEntrance);
     },
     { scope: pageRef }
   );
